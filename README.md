@@ -29,6 +29,9 @@ MovieSense is a Recommender System that uses Natural Language Processing techniq
     python app.py
 5. Click the corresponding link from terminal to view and use app
 
+## Web Application Deployment Link
+- https://huggingface.co/spaces/CharlyiE/Team_Sankara
+
 ## Acknowledgments
 - David Onyeali(Mentor)
 - AI Sturday Lagos team
