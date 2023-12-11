@@ -17,7 +17,6 @@ def show_one_movie(movie_id: int,
         return None
     
     print(f'details: {movie_details}')
-    img = read_image(movie_details['poster_url'])
 
     try:
         img_path = movie_details.get('poster_url', '')
