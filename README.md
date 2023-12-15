@@ -45,14 +45,4 @@ MovieSense is a Recommender System that uses Natural Language Processing techniq
 - Misi: ifeoluwayemisi3969@gmail.com
 
 
-## Requirements:
-Your project should involve the following components:
-- **Data Sourcing:** Web scraping or any other data sourcing method.
-- **Data Cleaning and Prep**: Data Cleaning, preparation and basic statistics reporting
-- **Modeling**: Base Model, Model Comparison, Hyper-parameter Tuning and monitoring with experiment management
-- **Model Deployment :** Deploy on the web or mobile. You can leverage Google Colab/Streamlit/Huggyface where possible.
-- **Requirements.txt**: A file for all dependecies required
 
-### Here is the timeline for your group projects:
-- Project Submission Deadline: December 10, 2023
-- Presentation Day: December 16, 2023
