@@ -17,14 +17,15 @@ load_dotenv()
 
 def get_movie_details(movie_id: int) -> dict:
     """ use tmdbId for tmdb API """
-    # get poster url
-    headers = {'Accept': 'application/json'}
-    payload = {'api_key': os.getenv('TMDB_API_KEY')}
-    response = requests.get("http://api.themoviedb.org/3/configuration", params=payload, headers=headers)
-    response = json.loads(response.text)
-    base_url = response['images']['base_url'] + 'w185'
-
     try:
+        # get poster url
+        headers = {'Accept': 'application/json'}
+        payload = {'api_key': os.getenv('TMDB_API_KEY')}
+        response = requests.get("http://api.themoviedb.org/3/configuration", params=payload, headers=headers)
+        response = json.loads(response.text)
+        base_url = response['images']['base_url'] + 'w185'
+
+
         # Query themoviedb.org API for movie poster url.
         movie_url = 'http://api.themoviedb.org/3/movie/{:}'.format(movie_id)
         response = requests.get(movie_url, params=payload, headers=headers)
@@ -81,13 +82,43 @@ def make_recommendation(movie_id: int,
     topk: how many recommendations (tmdbIds) to return
     """
     movie_idx = df[df['tmdbId']==movie_id].index[0]
-    similarity = cosine_similarity(embeddings[movie_idx],embeddings)
+    similarity = cosine_similarity(embeddings[movie_idx], embeddings)
     similarity_list = similarity.flatten().tolist()
     similarity_df = pd.DataFrame({'Id':df['tmdbId'], 'similarity':similarity_list})
     similarity_df = similarity_df.sort_values(by='similarity', ascending=False)
-    similar_items = similarity_df['Id'][1:11].to_list()
+    similar_items = similarity_df['Id'][1:(topk*2)+1].to_list()
     output = random.sample(similar_items, topk)
-    
     return output
 
+
+def search_title(query: str, 
+                df: pd.DataFrame, 
+                vectorizer: TfidfVectorizer, 
+                embeddings: Any,
+                topk: int=50,) -> List:
+    """ write logic for recommendation 
+    Given an input movie_id, this function should return a list of
+    recommended item ids.
+    
+    """
+    query_embs = vectorizer.transform([query])
+    cosine_results = cosine_similarity(query_embs, embeddings)
+    
+    # descending order
+    topk_results = cosine_results.argsort()[0, -(topk+1):][::-1]
+
+    topk2 = []
+    titles = []
+    for idx in topk_results:
+        id = df.loc[idx, 'tmdbId']
+        title = df.loc[idx, 'title']
+        topk2.append(id)
+        titles.append(title)
+    return titles
+
+
+def weighted_rating(rating: float, num_ratings: int, total_average: float=3.5, min_top: int=1000):
+    term_1 = (num_ratings / (num_ratings + min_top)) * rating
+    term_2 = (min_top / (num_ratings + min_top)) * total_average
+    return (term_1 + term_2) * 20 * 1.05
 

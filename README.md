@@ -1,7 +1,7 @@
 ## MovieSense: Movie Recommender System
 
 ## Project description 
-MovieSense is a Recommender System that uses Natural Language Processing techniques to provide users with similar movies to a movie and relevant information about the recommendations.This is done by creating embeddings of the movie features from the dataset, transformation of data to vectors and computing the similarities of movies. This project aoims to tackle the problem of choice overload. 
+MovieSense is a Recommender System that uses Natural Language Processing techniques to provide users with similar movies to a movie and relevant information about the recommendations.This is done by creating embeddings of the movie features from the dataset, transformation of data to vectors and computing the similarities of movies. This project aims to tackle the problem of choice overload. 
 
 # Features
 1. NLP Techniques and ML Models:
